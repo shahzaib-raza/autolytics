@@ -1,2 +1,2 @@
-web: gunicorn pakwheels-analytics-app.wsgi:application --log-file -
+web: gunicorn djangoProject.wsgi:application --log-file -
 heroku ps:scale web=1
