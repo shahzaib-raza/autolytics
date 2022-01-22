@@ -1,2 +1,2 @@
-web: gunicorn CCMS.wsgi --log-file -
+web: gunicorn djangoProject.wsgi --log-file -
 heroku ps:scale web=1
