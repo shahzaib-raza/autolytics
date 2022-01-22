@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-!$odrzs)sqx59k50a+a=2^(cktd!)&#m81q5z&997l+m5bk-23
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'git.heroku.com/pakwheels-analytics-app.git']
+ALLOWED_HOSTS = ['127.0.0.1', 'pakwheels-analytics-app.herokuapp.com/']
 
 # Application definition
 
