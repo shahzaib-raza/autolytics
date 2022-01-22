@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-!$odrzs)sqx59k50a+a=2^(cktd!)&#m81q5z&997l+m5bk-23
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'pakwheelsAnalyticsApp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'git.heroku.com/pakwheels-analytics-app.git']
 
 # Application definition
 
@@ -119,8 +119,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-PROJECT_DIR = os.path.dirname(os.path.abspath(__file__)),
-STATIC_ROOT = os.path.join(PROJECT_DIR[0][:len(PROJECT_DIR[0])-13], 'static')
+# PROJECT_DIR = os.path.dirname(os.path.abspath(__file__)),
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
