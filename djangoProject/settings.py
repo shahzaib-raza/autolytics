@@ -122,7 +122,7 @@ STATIC_URL = '/static/'
 # PROJECT_DIR = os.path.dirname(os.path.abspath(__file__)),
 STATIC_ROOT = 'static_root/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, '/static'),
+    os.path.join(BASE_DIR, 'static'),
     '/static/',
 ]
 
