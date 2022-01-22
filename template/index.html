@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<style>
+    body{
+        background-image: url('/static/bg7.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100%;
+        background-position: center;
+    }
+
+    @media only screen and (max-width: 1010px) {
+        body {
+            background-image: url('/static/bg_m_2.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center center;
+            background-size: 100%;
+        }
+    }
+
+    .div1{
+        font-size: 1vw;
+        margin-top: 10%;
+        align-content: center;
+    }
+    .div3{
+        font-size: 1vw;
+        margin-top: 10%;
+        align-content: center;
+    }
+    .div1:hover{
+        background-color: rgba(79, 83, 88, 0.6);
+    }
+    .div3:hover{
+        background-color: rgba(79, 83, 88, 0.6);
+    }
+
+    @media only screen and (max-width: 1010px) {
+        .div1 {
+            height: 570px;
+            width: 85%;
+            font-size: 1vh;
+            margin-left: 7%;
+        }
+        .div3 {
+            height: 570px;
+            width: 85%;
+            font-size: 1vh;
+            margin-left: 7%;
+        }
+    }
+
+    .div2 {
+        width: 50%;
+        margin-left: 25%;
+        margin-top: 5%;
+        background-color: rgba(79, 83, 88, 0.4);
+        color: whitesmoke;
+        padding-top: 1%;
+        padding-bottom: 1%;
+        text-align: center;
+        font-size: 1vw;
+    }
+    .div2:hover{
+        background-color: rgba(79, 83, 88, 0.8);
+    }
+
+    .but1{
+        background-color: rgba(79, 83, 88, 0.4);
+        color: whitesmoke;
+        font-size: 1vw;
+        width: 6%;
+        padding: 1%;
+        position: relative;
+        float: right;
+        margin-right: 5%;
+        border-color: rgba(79, 83, 88, 0.4);
+    }
+    .but1:hover{
+        background-color: rgba(79, 83, 88, 0.8);
+    }
+
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+    <div style="margin-top: 5%">
+        <h1 style="color: white; font-size: 2vw; position: relative; float: left">My FYP App</h1>
+        <a href="{% url 'testApp:index' %}"><button class="but1">Home</button></a>
+    </div>
+    <br>
+    <br>
+    <div class="div1">
+        {% autoescape off %}
+            {{ plot_div }}
+        {% endautoescape %}
+    </div>
+    <div class="div3">
+        {% autoescape off %}
+            {{ plot_div1 }}
+        {% endautoescape %}
+    </div>
+    <div class="div2">
+        Min. Price:
+        {% autoescape off %}
+        {{ min_price }}
+        {% endautoescape %}
+        <br>
+        <br>
+        Avg. Price:
+        {% autoescape off %}
+        {{ avg_price }}
+        {% endautoescape %}
+        <br>
+        <br>
+        Max. Price:
+        {% autoescape off %}
+        {{ max_price }}
+        {% endautoescape %}
+    </div>
+</body>
+</html>

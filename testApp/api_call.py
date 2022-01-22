@@ -1,0 +1,88 @@
+import requests
+from bs4 import BeautifulSoup as Bs
+import pandas as pd
+import datetime
+
+
+def get_last_page_no(mk, md, ct):
+    link = "https://www.pakwheels.com/used-cars/search/-/ct_" + ct + "/mk_" + mk + "/md_" + md + "/?page=1000&sortby=model_year-asc"
+    fetch = requests.get(link, allow_redirects=True)
+    page = fetch.text
+    html = Bs(page, 'html.parser')
+    element = html.findAll("li", class_='page')
+    if len(element) == 0:
+        final_dest = 1
+    else:
+        final_dest = element[len(element) - 1].text
+    return int(final_dest)
+
+
+def is_updated(update):
+    updated = False
+    months = {'Jan': 1, 'Fab': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10,
+              'Nov': 11, 'Dec': 12}
+    year = int(update[-4:])
+    month = update[3: 6]
+    month = months[month]
+    # date = int(update[:2])
+    cur_month = datetime.datetime.now().month
+    cur_year = datetime.datetime.now().year
+    if year == cur_year:
+        if month == cur_month or month == cur_month - 1:
+            updated = True
+    return updated
+
+
+def get_data_pw(make, model, city):
+    data = []
+    last_page = get_last_page_no(make, model, city)
+    print("Total pages are", last_page)
+    if last_page > 1:
+        for j in range(1, last_page+1):
+            print("Scrapping page: ", j)
+            url = "https://www.pakwheels.com/used-cars/search/-/ct_" + city + "/mk_" + make + "/md_" + model + ".json?client_id=37952d7752aae22726aff51be531cddd&client_secret=014a5bc91e1c0f3af4ea6dfaa7eee413&api_version=15&sortby=model_year-asc&page=" + str(j) + "&extra_info=true"
+            response = requests.get(url)
+            itr = len(response.json()["result"])
+            for i in range(itr):
+                price = response.json()['result'][i]['price']
+                year = response.json()['result'][i]['model_year']
+                update = response.json()['result'][i]['last_updated']
+                if is_updated(update) is False and price == "Call for Price":
+                    pass
+                else:
+                    try:
+                        data.append([int(year), int(price)])
+                    except ValueError:
+                        pass
+    else:
+        url = "https://www.pakwheels.com/used-cars/search/-/ct_" + city + "/mk_" + make + "/md_" + model + ".json?client_id=37952d7752aae22726aff51be531cddd&client_secret=014a5bc91e1c0f3af4ea6dfaa7eee413&api_version=15&sortby=model_year-asc&page=1&extra_info=true"
+        response = requests.get(url)
+        itr = len(response.json()["result"])
+        for i in range(itr):
+            price = response.json()['result'][i]['price']
+            year = response.json()['result'][i]['model_year']
+            update = response.json()['result'][i]['last_updated']
+            if is_updated(update) is False and price == "Call for Price":
+                pass
+            else:
+                try:
+                    data.append([int(year), int(price)])
+                except ValueError:
+                    pass
+    df = pd.DataFrame(data, columns=['year', 'price'])
+    return df
+
+
+def millify(num):
+    number = str(num)
+    if len(number) == 7:
+        milli = number[0] + "." + number[1:3] + "M"
+    elif len(number) == 6:
+        milli = "0." + number[0:2] + "M"
+    elif len(number) == 5:
+        milli = number[:2] + "K"
+    elif len(number) == 8:
+        milli = number[:2] + "M"
+    else:
+        milli = num
+    return milli
