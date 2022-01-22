@@ -125,12 +125,10 @@ STATIC_URL = '/static/'
 
 # PROJECT_DIR = os.path.dirname(os.path.abspath(__file__)),
 STATIC_ROOT = 'static_root/'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-    '/static/',
-
-    url(r'^media/(?P<path>.*)$', serve,{'document_root':       settings.MEDIA_ROOT}), 
-    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 
+    '/static/', 
 ]
 
 # Default primary key field type
