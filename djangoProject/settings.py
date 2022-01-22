@@ -117,11 +117,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = 'pakwheels-analytics-app.git\static'
+STATIC_URL = '/static/'
 
 # PROJECT_DIR = os.path.dirname(os.path.abspath(__file__)),
-STATIC_ROOT = 'pakwheels-analytics-app.git\static'
-
+STATIC_ROOT = '/static_root'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
     '/static/',
