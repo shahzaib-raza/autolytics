@@ -120,7 +120,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # PROJECT_DIR = os.path.dirname(os.path.abspath(__file__)),
-STATIC_ROOT = 'git.heroku.com/pakwheels-analytics-app.git/static'
+STATIC_ROOT = 'pakwheels-analytics-app.git/static'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
