@@ -79,7 +79,7 @@
 
     @media only screen and (max-width: 1010px) {
         .div1 {
-            height: 570px;
+            height: auto;
             width: 85%;
             font-size: 5vw;
             margin-left: 7%;
@@ -107,7 +107,7 @@
 </style>
 <head>
     <meta charset="UTF-8">
-    <title>Results</title>
+    <title>Analysis</title>
 </head>
 <body>
     <div style="margin-top: 5%">
@@ -119,11 +119,6 @@
     <div class="div1">
         {% autoescape off %}
             {{ plot_div }}
-        {% endautoescape %}
-    </div>
-    <div class="div3">
-        {% autoescape off %}
-            {{ plot_div1 }}
         {% endautoescape %}
     </div>
     <div class="div2">

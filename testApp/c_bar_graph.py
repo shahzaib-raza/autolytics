@@ -38,7 +38,6 @@ def c_bar_plot(data):
     indexes = list(range(1, len(df.index)+1))
     angles = [element * width for element in indexes]
 
-
     # Draw bars
     bars = ax.bar(
         x=angles,
