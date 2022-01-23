@@ -16,7 +16,7 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-position: center center;
-            background-size: 100%;
+            background-size: 100vh;
         }
     }
 
@@ -30,28 +30,6 @@
         margin-top: 10%;
         align-content: center;
     }
-    .div1:hover{
-        background-color: rgba(79, 83, 88, 0.6);
-    }
-    .div3:hover{
-        background-color: rgba(79, 83, 88, 0.6);
-    }
-
-    @media only screen and (max-width: 1010px) {
-        .div1 {
-            height: 570px;
-            width: 85%;
-            font-size: 1vh;
-            margin-left: 7%;
-        }
-        .div3 {
-            height: 570px;
-            width: 85%;
-            font-size: 1vh;
-            margin-left: 7%;
-        }
-    }
-
     .div2 {
         width: 50%;
         margin-left: 25%;
@@ -63,8 +41,17 @@
         text-align: center;
         font-size: 1vw;
     }
+    
     .div2:hover{
         background-color: rgba(79, 83, 88, 0.8);
+    }
+    
+    .div1:hover{
+        background-color: rgba(79, 83, 88, 0.6);
+    }
+
+    .div3:hover{
+        background-color: rgba(79, 83, 88, 0.6);
     }
 
     .but1{
@@ -78,8 +65,43 @@
         margin-right: 5%;
         border-color: rgba(79, 83, 88, 0.4);
     }
+
+    .title {
+        color: white;
+        font-size: 2vw;
+        position: relative;
+        float: left
+    }
+    
     .but1:hover{
         background-color: rgba(79, 83, 88, 0.8);
+    }
+
+    @media only screen and (max-width: 1010px) {
+        .div1 {
+            height: 570px;
+            width: 85%;
+            font-size: 5vw;
+            margin-left: 7%;
+        }
+        .div3 {
+            height: 570px;
+            width: 85%;
+            font-size: 5vw;
+            margin-left: 7%;
+        }
+        .div2 {
+            font-size: 5vw;
+            width: 50%;
+            margin-left: 25%;
+        }
+        .but1 {
+            font-size: 3.5vh;
+            width: auto;
+         }
+        .title {
+            font-size: 6vw;
+        }
     }
 
 </style>
@@ -89,7 +111,7 @@
 </head>
 <body>
     <div style="margin-top: 5%">
-        <h1 style="color: white; font-size: 2vw; position: relative; float: left">My FYP App</h1>
+        <h1 class='title'>Pakwheels-Analytics</h1>
         <a href="{% url 'testApp:index' %}"><button class="but1">Home</button></a>
     </div>
     <br>
