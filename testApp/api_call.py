@@ -19,7 +19,7 @@ def get_last_page_no(mk, md, ct):
 
 def is_updated(update):
     updated = False
-    months = {'Jan': 1, 'Fab': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10,
+    months = {'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10,
               'Nov': 11, 'Dec': 12}
     year = int(update[-4:])
     month = update[3: 6]
@@ -33,42 +33,37 @@ def is_updated(update):
     return updated
 
 
-def get_data_pw(make, model, city):
-    data = []
-    last_page = get_last_page_no(make, model, city)
-    print("Total pages are", last_page)
-    if last_page > 1:
-        for j in range(1, last_page+1):
-            print("Scrapping page: ", j)
-            url = "https://www.pakwheels.com/used-cars/search/-/ct_" + city + "/mk_" + make + "/md_" + model + ".json?client_id=37952d7752aae22726aff51be531cddd&client_secret=014a5bc91e1c0f3af4ea6dfaa7eee413&api_version=15&sortby=model_year-asc&page=" + str(j) + "&extra_info=true"
-            response = requests.get(url)
-            itr = len(response.json()["result"])
-            for i in range(itr):
-                price = response.json()['result'][i]['price']
-                year = response.json()['result'][i]['model_year']
-                update = response.json()['result'][i]['last_updated']
-                if is_updated(update) is False and price == "Call for Price":
-                    pass
-                else:
-                    try:
-                        data.append([int(year), int(price)])
-                    except ValueError:
-                        pass
-    else:
-        url = "https://www.pakwheels.com/used-cars/search/-/ct_" + city + "/mk_" + make + "/md_" + model + ".json?client_id=37952d7752aae22726aff51be531cddd&client_secret=014a5bc91e1c0f3af4ea6dfaa7eee413&api_version=15&sortby=model_year-asc&page=1&extra_info=true"
+def get_pages_data(u):
+    d = []
+    for url in u:
         response = requests.get(url)
-        itr = len(response.json()["result"])
-        for i in range(itr):
-            price = response.json()['result'][i]['price']
-            year = response.json()['result'][i]['model_year']
-            update = response.json()['result'][i]['last_updated']
+        obj = response.json()['result']
+        for i in range(len(obj)):
+            price = obj[i]['price']
+            update = obj[i]['last_updated']
             if is_updated(update) is False and price == "Call for Price":
                 pass
             else:
                 try:
-                    data.append([int(year), int(price)])
+                    year = obj[i]['model_year']
+                    d.append([int(year), int(price)])
                 except ValueError:
                     pass
+    return d
+
+
+def get_data_pw(make, model, city):
+
+    last_page = get_last_page_no(make, model, city)
+    print("Total pages are", last_page)
+
+    if last_page > 1:
+        urls = ["https://www.pakwheels.com/used-cars/search/-/ct_" + city + "/mk_" + make + "/md_" + model + ".json?client_id=37952d7752aae22726aff51be531cddd&client_secret=014a5bc91e1c0f3af4ea6dfaa7eee413&api_version=15&sortby=model_year-asc&page=" + str(j) + "&extra_info=true" for j in range(1, 20)]
+
+    else:
+        urls = ["https://www.pakwheels.com/used-cars/search/-/ct_" + city + "/mk_" + make + "/md_" + model + ".json?client_id=37952d7752aae22726aff51be531cddd&client_secret=014a5bc91e1c0f3af4ea6dfaa7eee413&api_version=15&sortby=model_year-asc&page=1&extra_info=true"]
+
+    data = get_pages_data(urls)
     df = pd.DataFrame(data, columns=['year', 'price'])
     return df
 
