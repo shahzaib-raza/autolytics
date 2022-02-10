@@ -9,7 +9,13 @@ def get_last_page_no(mk, md, ct):
     fetch = requests.get(link, allow_redirects=True)
     page = fetch.text
     html = Bs(page, 'html.parser')
+    try:
+        no_elem = html.find("div", class_='well suggestions-noresults search-main').text
+    except AttributeError:
+        no_elem = None
     element = html.findAll("li", class_='page')
+    if no_elem is not None:
+        return None
     if len(element) == 0:
         final_dest = 1
     else:
@@ -55,8 +61,8 @@ def get_pages_data(u):
 def get_data_pw(make, model, city):
 
     last_page = get_last_page_no(make, model, city)
-    print("Total pages are", last_page)
-
+    if last_page is None:
+        return None
     if last_page > 1:
         urls = ["https://www.pakwheels.com/used-cars/search/-/ct_" + city + "/mk_" + make + "/md_" + model + ".json?client_id=37952d7752aae22726aff51be531cddd&client_secret=014a5bc91e1c0f3af4ea6dfaa7eee413&api_version=15&sortby=model_year-asc&page=" + str(j) + "&extra_info=true" for j in range(1, 20)]
 

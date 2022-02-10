@@ -5,7 +5,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Pakwheels-Analytics</title>
+        <title>AutoLytics</title>
     </head>
 
     <style>
@@ -31,9 +31,10 @@
             margin-right: auto;
             margin-top: 5%;
             width: 30%;
-            background-color: RGB(47,49,49,0.8);
+            background-color: RGBA(47,49,49, 0.8);
             padding: 2%;
             font-size: 1vw;
+            color: whitesmoke;
         }
 
         @media only screen and (max-width: 1010px) {
@@ -43,12 +44,18 @@
             }
         }
 
-        #id_make, #id_city{
+        #make, #city, #model {
             width: 80%;
             border: solid maroon;
+            background: rgba(79, 83, 88, 0.4);
+            color: whitesmoke;
+            outline: none;
+            float: right;
         }
-        #id_model{
-            width: 78%;
+
+        option{
+            background-color: #4f5358;
+            opacity: 0.1;
             border: solid maroon;
         }
 
@@ -64,9 +71,9 @@
         .logo{
             background-color: rgba(79, 83, 88, 0.4);
             font-size: 3vw;
-            margin-left: 30%;
+            margin-left: 35%;
             color: whitesmoke;
-            width: 40%;
+            width: 30%;
             text-align: center;
         }
 
@@ -74,10 +81,13 @@
             #button{
                 width: 30%;
                 font-size: 4vw;
+                margin-left: 5%;
             }
 
-            #id_make, #id_model, #id_city{
+            #make, #model, #city{
                 font-size: 5vw;
+                width: 90%;
+                margin-right: 5%;
             }
 
             .logo{
@@ -87,10 +97,6 @@
                 margin-left: 20%;
                 width: 60%;
             }
-        }
-
-        .alert{
-
         }
 
     </style>
@@ -103,30 +109,73 @@
                     "            border: solid maroon;\n" +
                     "            background-color: rgba(79, 83, 88, 0.4);\n" +
                     "            color: whitesmoke;\n" +
+                    "            @media only screen and (max-width: 1010px) {\n" +
+                    "                font-size: 3vw;\n" +
+                    "            }\n" +
                     "            font-size: 1.5vw;\n" +
                     "            padding: 1%;"
                 document.getElementById("alert").innerText="Sometimes it take long to scrap data, please be patient...";
             }
         </script>
+
         <div id="alert" class="alert"></div>
         <div onload="showAlert()"></div>
-        <h1 class="logo">Pakwheels Analytics</h1>
+        <h1 class="logo">AutoLytics</h1>
         <div class="mainDiv">
-            <form method="get">
+
+            <form method="GET">
                 {% csrf_token %}
-                <ul style="list-style-type: none; color: whitesmoke; font-size: 100%">
-                    <li>{{ form.make.label }}</li>
-                    <li id="make">{{ form.make }}</li>
-                    <li>{{ form.make.css_class }}</li>
-                    <li><br></li>
-                    <li>{{ form.model.label }}</li>
-                    <li id="model">{{ form.model }}</li>
-                    <li><br></li>
-                    <li>{{ form.city.label }}</li>
-                    <li id="city">{{ form.city }}</li>
-                    <li><br></li>
-                    <li><input type="submit" value="Submit" id="button" onclick="showAlert()"></li>
-                </ul>
+
+                <script type="text/javascript" src="/static/model.js"></script>
+
+                <label for="make">Make</label>
+                    <select id="make" name="make" onchange="get_model('make', 'model')" required>
+                        <option></option>
+                        <option value="audi">Audi</option>
+                        <option value="daewoo">Daewoo</option>
+                        <option value="daihatsu">Daihatsu</option>
+                        <option value="datson">Datson</option>
+                        <option value="dfsk">DFSK</option>
+                        <option value="faw">FAW</option>
+                        <option value="hyundai">Hyundai</option>
+                        <option value="kia">KIA</option>
+                        <option value="mazda">Mazda</option>
+                        <option value="mg">MG</option>
+                        <option value="mitsubishi">Mitsubishi</option>
+                        <option value="nissan">Nissan</option>
+                        <option value="prince">Prince</option>
+                        <option value="proton">Proton</option>
+                        <option value="suzuki">Suzuki</option>
+                        <option value="toyota">Toyota</option>
+                        <option value="united">United</option>
+                    </select>
+
+                <br><br>
+
+                <label for="model">Model</label>
+
+                    <select id="model" name="model" required>
+                    </select>
+
+
+                <br><br>
+
+                <label for="city">City</label>
+
+                    <select id="city" name="city" required>
+                        <option value="karachi">Karachi</option>
+                        <option value="lahore">Lahore</option>
+                        <option value="islamabad">Islamabad</option>
+                        <option value="quetta">Quetta</option>
+                        <option value="peshawar">Peshawar</option>
+                        <option value="rawalpindi">Rawalpindi</option>
+                        <option value="hyderabad">Hyderabad</option>
+                    </select>
+
+
+                <br><br>
+
+                <button type="submit" id="button" onclick="showAlert()">Search</button>
             </form>
         </div>
     </body>

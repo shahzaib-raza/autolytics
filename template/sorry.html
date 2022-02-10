@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>We are sorry</title>
+    </head>
+
+    <style>
+
+        body{
+            background-image: url("/static/sorry.jpg");
+            background-size: cover;
+            background-attachment: fixed;
+            color: whitesmoke;
+        }
+        p, h1{
+            background-color: RGBA(47,49,49, 0.4);
+            padding: 1%;
+            width: 80%;
+            margin-left: 10%;
+            text-align: center;
+        }
+
+        a{
+            border: solid maroon;
+            float: left;
+            margin-left: 45%;
+            padding: 1%;
+            color: whitesmoke;
+            text-decoration: None;
+        }
+
+        p:hover, h1:hover, a:hover{
+            background-color: RGBA(47,49,49, 0.8);
+        }
+
+    </style>
+
+    <body>
+        <h1>We are sorry... No result found</h1>
+        <p>
+            No recent record found for the car. Our application scraps real time data from web, updated within 2 months
+            time period.
+        </p>
+        <a href="{% url 'testApp:index' %}">Home</a>
+    </body>
+</html>

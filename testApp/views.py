@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from plotly.offline import plot
-from .forms import InputForm
 from .api_call import get_data_pw, millify
 
 from plotly import subplots
@@ -13,12 +12,11 @@ def appView(request, mm, mn, ct):
     mn = mn.strip()
     ct = ct.strip()
     data = get_data_pw(mm, mn, ct)
+    if data is None:
+        return render(request, "sorry.html")
     mm = mm.capitalize()
     mn = mn.capitalize()
     ct = ct.capitalize()
-    print(f"Input make is: {mm}")
-    print(f"Input model is: {mn}")
-    print(f"Input city is: {ct}")
     tit = mm + " " + mn + " (" + ct + ")"
     fory = data['year'].value_counts()[:]
     forx = data['year'].value_counts().index.tolist()
@@ -56,16 +54,10 @@ def appView(request, mm, mn, ct):
 
 def model_name(request):
     if request.method == 'GET':
-        form = InputForm(request.GET)
-        vals = form.data.dict()
-        make = vals.get("make")
-        make = str(make).lower()
-        model = vals.get("model")
-        model = str(model).lower()
-        city = vals.get("city")
-        city = str(city).lower()
-        if form.is_valid():
+        make = request.GET.get('make')
+        model = request.GET.get('model')
+        city = request.GET.get('city')
+        if make is not None and model is not None and city is not None:
             return appView(request, make, model, city)
-    else:
-        form = InputForm()
-    return render(request, 'results.html', {'form': form})
+
+    return render(request, 'results.html')
