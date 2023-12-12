@@ -25,7 +25,7 @@ let my_dict = {
     "faw": [["carrier", "Carrier"], ["sirius", "Sirius"], ["v2", "V2"], ["vita", "Vita"], ["x-pv", "X-PV"]],
 
     "honda": [["accord", "Accord"], ["acty", "Acty"], ["acura", "Acura"], ["airwave", "Airwave"], ["br-v", "BR-V"],
-              ["civic", "Civic"], ["cr-x", "Cr X"], ["cr-v", "CR-V"], ["cr-z", "CR-Z"], ["cross-road", "Cross Road"],
+              ["civic", "Civic"], ["city", "City"], ["cr-x", "Cr X"], ["cr-v", "CR-V"], ["cr-z", "CR-Z"], ["cross-road", "Cross Road"],
               ["fit", "Fit"], ["grace-hybrid", "Grace Hybrid"], ["insight", "Insight"], ["jazz", "Jazz"],
               ["n-box", "N Box"], ["n-one", "N One"], ["n-wgn", "N Wgn"], ["spike", "Spike"], ["vezel", "Vezel"],
               ["z", "Z"]],

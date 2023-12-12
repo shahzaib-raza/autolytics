@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 from django.conf import settings
-from django.conf.urls import url
+# from django.urls import include, re_path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.views.static import serve
 

@@ -1,16 +1,25 @@
 from django.shortcuts import render
 from plotly.offline import plot
 from .api_call import get_data_pw, millify
-
+from IPython.display import display
+import pandas as pd
 from plotly import subplots
 import plotly.graph_objs as go
 
+
+def get_int(x):
+    try:
+        return float(x)
+    except:
+        return None
 
 # Create your views here.
 def appView(request, mm, mn, ct):
     data = get_data_pw(mm, mn, ct)
     if data is None:
         return render(request, "sorry.html")
+    data['price'].apply(get_int)
+    data['year'].apply(get_int)
     mm = mm.strip().capitalize()
     mn = mn.strip().capitalize()
     ct = ct.strip().capitalize()
@@ -56,7 +65,7 @@ def appView(request, mm, mn, ct):
                     col=1
                 )
 
-    # Formatting data for C_bar plot
+    # Formatting data for C_bar 
     grouped_data = data.groupby(['year'])
     gd_min_price = grouped_data.min().reset_index()['price'].tolist()
     gd_max_price = grouped_data.max().reset_index()['price'].tolist()
@@ -124,11 +133,12 @@ def appView(request, mm, mn, ct):
         'polar_radialaxis_visible': False,
         'polar_radialaxis_showticklabels': False,
     })
-
+    
+    prc = data[data['price'].notna()]['price']
     plot_div = plot({'data': sp}, output_type='div')
-    min_price = int(min(data['price']))
-    avg_price = int(sum(data['price']) / len(data['price']))
-    max_price = int(max(data['price']))
+    min_price = int(prc.min())
+    avg_price = int(prc.sum() / len(prc))
+    max_price = int(prc.max())
     mini = millify(min_price)
     price = millify(avg_price)
     maxi = millify(max_price)

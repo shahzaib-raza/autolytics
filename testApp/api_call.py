@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as Bs
+import json
+import re
 import pandas as pd
 import datetime
 
@@ -42,19 +44,23 @@ def is_updated(update):
 def get_pages_data(u):
     d = []
     for url in u:
-        response = requests.get(url)
-        obj = response.json()['result']
-        for i in range(len(obj)):
-            price = obj[i]['price']
-            update = obj[i]['last_updated']
-            if is_updated(update) is False and price == "Call for Price":
-                pass
-            else:
+        try:
+            response = requests.get(url)
+
+            b = Bs(response.text, 'html.parser')
+            add_ids = re.findall('main_ad_[0-9]+', response.text)
+            lis = [b.find('li', id=i) for i in add_ids]
+            objs = []
+            for id_ in lis:
                 try:
-                    year = obj[i]['model_year']
-                    d.append([int(year), int(price)])
-                except ValueError:
+                    objs.append(id_.find('script').text.strip().replace("\n", "").replace("  ", ""))
+                except:
                     pass
+            js = [json.loads(obj) for obj in objs]
+            for jp in js:
+                d.append([jp['modelDate'], jp['offers']['price']])
+        except:
+            pass
     return d
 
 
@@ -64,10 +70,10 @@ def get_data_pw(make, model, city):
     if last_page is None:
         return None
     if last_page > 1:
-        urls = ["https://www.pakwheels.com/used-cars/search/-/ct_" + city + "/mk_" + make + "/md_" + model + ".json?client_id=37952d7752aae22726aff51be531cddd&client_secret=014a5bc91e1c0f3af4ea6dfaa7eee413&api_version=15&sortby=model_year-asc&page=" + str(j) + "&extra_info=true" for j in range(1, 20)]
+        urls = ["https://www.pakwheels.com/used-cars/search/-/ct_" + city + "/mk_" + make + "/md_" + model + "/?page=" + str(j) for j in range(1, 20)]
 
     else:
-        urls = ["https://www.pakwheels.com/used-cars/search/-/ct_" + city + "/mk_" + make + "/md_" + model + ".json?client_id=37952d7752aae22726aff51be531cddd&client_secret=014a5bc91e1c0f3af4ea6dfaa7eee413&api_version=15&sortby=model_year-asc&page=1&extra_info=true"]
+        urls = ["https://www.pakwheels.com/used-cars/search/-/ct_" + city + "/mk_" + make + "/md_" + model + "/?page=1"]
 
     data = get_pages_data(urls)
     df = pd.DataFrame(data, columns=['year', 'price'])
