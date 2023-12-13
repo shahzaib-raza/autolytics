@@ -1,7 +1,7 @@
 Django == 4.2.7
 
 # C:\Users\Shahzaib\Documents\Pakwheels\testApp\api_call.py: 2
-bs4 == 4.12.2
+beautifulsoup4 == 4.12.2
 
 # C:\Users\Shahzaib\Documents\Pakwheels\testApp\c_bar_graph.py: 2
 matplotlib == 3.8.1
