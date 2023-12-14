@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from plotly.offline import plot
 from .api_call import get_data_pw, millify
-from IPython.display import display
 import pandas as pd
 from plotly import subplots
 import plotly.graph_objs as go
