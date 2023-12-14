@@ -4,11 +4,11 @@ Django == 4.2.7
 beautifulsoup4 == 4.12.2
 
 # C:\Users\Shahzaib\Documents\Pakwheels\testApp\c_bar_graph.py: 2
-matplotlib == 3.8.1
+matplotlib == 3.7.4
 
 # C:\Users\Shahzaib\Documents\Pakwheels\testApp\api_call.py: 3
 # C:\Users\Shahzaib\Documents\Pakwheels\testApp\c_bar_graph.py: 1
-pandas == 2.1.3
+pandas == 2.0.3
 
 # C:\Users\Shahzaib\Documents\Pakwheels\testApp\views.py: 2,3
 plotly == 5.18.0
