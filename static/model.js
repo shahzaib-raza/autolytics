@@ -52,7 +52,7 @@ let my_dict = {
 
     "proton": [["saga", "Saga"], ["x50", "X50"], ["x70", "X70"]],
 
-    "suzuki": [["alto", "Alto"], ["apv", "APV"], ["baleno", "Baleno"], ["carry", "Carry"], ["ciaz", "Ciaz"],
+    "suzuki": [["alto", "Alto"], ["apv", "APV"], ["baleno", "Baleno"], ["carry", "Carry"], ["ciaz", "Ciaz"], ["cultus", "Cultus"],
                ["every", "Every"], ["fx", "FX"], ["hustler", "Hustler"], ["jimny", "Jimny"], ["kei", "Kei"],
                ["liana", "Liana"], ["margalla", "Margalla"], ["ravi", "Ravi"], ["swift", "Swift"],
                ["wagon-r", "Wagon R"]],
