@@ -8,7 +8,7 @@ matplotlib == 3.7.4
 
 # C:\Users\Shahzaib\Documents\Pakwheels\testApp\api_call.py: 3
 # C:\Users\Shahzaib\Documents\Pakwheels\testApp\c_bar_graph.py: 1
-pandas == 2.0.3
+pandas == 2.2.2
 
 # C:\Users\Shahzaib\Documents\Pakwheels\testApp\views.py: 2,3
 plotly == 5.18.0
