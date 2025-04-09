@@ -1,4 +1,5 @@
 import requests
+from requests_html import HTMLSession as ses
 from bs4 import BeautifulSoup as Bs
 import json
 import re
@@ -8,7 +9,9 @@ import datetime
 
 def get_last_page_no(mk, md, ct):
     link = "https://www.pakwheels.com/used-cars/search/-/ct_" + ct + "/mk_" + mk + "/md_" + md + "/?page=1000&sortby=model_year-asc"
-    fetch = requests.get(link, allow_redirects=True)
+    s = ses()
+    fetch = s.get(link, allow_redirects=True)
+    s.close()
     page = fetch.text
     html = Bs(page, 'html.parser')
     try:
@@ -45,7 +48,9 @@ def get_pages_data(u):
     d = []
     for url in u:
         try:
-            response = requests.get(url)
+            s = ses()
+            response = s.get(url)
+            s.close()
 
             b = Bs(response.text, 'html.parser')
             add_ids = re.findall('main_ad_[0-9]+', response.text)
