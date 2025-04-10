@@ -46,11 +46,12 @@ def is_updated(update):
 
 def get_pages_data(u):
     d = []
+    s = ses()
     for url in u:
         try:
-            s = ses()
+            
             response = s.get(url)
-            s.close()
+            
 
             b = Bs(response.text, 'html.parser')
             add_ids = re.findall('main_ad_[0-9]+', response.text)
@@ -66,6 +67,7 @@ def get_pages_data(u):
                 d.append([jp['modelDate'], jp['offers']['price']])
         except:
             pass
+    s.close()
     return d
 
 
