@@ -2,6 +2,7 @@ from django.shortcuts import render
 from plotly.offline import plot
 from .api_call import get_data_pw, millify
 import pandas as pd
+import numpy as np
 from plotly import subplots
 import plotly.graph_objs as go
 
@@ -36,8 +37,13 @@ def appView(request, mm, mn, ct):
                        [{"type": "polar"}]]
             )
     
-    sp.add_trace(go.Scatter(x=data['year'],
-                            y=data['price'],
+    x_vals = data['year']
+    y_vals = data['price']
+    slope, intercept = np.polyfit(x_vals, y_vals, 1)
+    best_fit_line = slope * x_vals + intercept
+    
+    sp.add_trace(go.Scatter(x=x_vals,
+                            y=y_vals,
                             name="Each Available "+mn+" Price",
                             mode='markers',
                             marker={'color': 'tomato', 'size': 12},
@@ -50,10 +56,26 @@ def appView(request, mm, mn, ct):
                     row=1,
                     col=1
                 )
+    sp.add_trace(go.Line(x=x_vals,
+                            y=best_fit_line,
+                            name="Linear Increment",
+                            mode='lines',
+                            line=dict(color='royalblue'),
+                            hoverinfo='skip',
+                            hovertemplate="<br>".join([
+                                "year: %{x}",
+                                "price: "+"%{y}",
+                            ]),
+                        hoverlabel={'font': {'color': 'white'}}
+                        ),
+                    row=1,
+                    col=1
+                )
     
     sp.add_trace(go.Bar(x=fory.index.tolist(),
                         y=fory,
                         name="No. of "+mn+" for sale per year",
+                        marker={'color': 'tomato'},
                         hovertemplate="<br>".join([
                                 "year: %{x}",
                                 f"No. of {mn} found: "+"%{y}",
