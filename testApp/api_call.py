@@ -1,6 +1,7 @@
 import requests
 from requests_html import HTMLSession as ses
 from bs4 import BeautifulSoup as Bs
+from concurrent.futures import ThreadPoolExecutor
 import json
 import re
 import pandas as pd
@@ -44,31 +45,35 @@ def is_updated(update):
     return updated
 
 
-def get_pages_data(u):
-    d = []
-    s = ses()
-    for url in u:
-        try:
-            
-            response = s.get(url)
-            
+def fetch_url_data(url):
+    try:
+        session = ses()
+        response = session.get(url)
+        b = Bs(response.text, 'html.parser')
+        add_ids = re.findall(r'main_ad_[0-9]+', response.text)
+        lis = [b.find('li', id=i) for i in add_ids]
 
-            b = Bs(response.text, 'html.parser')
-            add_ids = re.findall('main_ad_[0-9]+', response.text)
-            lis = [b.find('li', id=i) for i in add_ids]
-            objs = []
-            for id_ in lis:
-                try:
-                    objs.append(id_.find('script').text.strip().replace("\n", "").replace("  ", ""))
-                except:
-                    pass
-            js = [json.loads(obj) for obj in objs]
-            for jp in js:
-                d.append([jp['modelDate'], jp['offers']['price']])
-        except:
-            pass
-    s.close()
-    return d
+        objs = []
+        for id_ in lis:
+            try:
+                objs.append(id_.find('script').text.strip().replace("\n", "").replace("  ", ""))
+            except:
+                pass
+
+        js = [json.loads(obj) for obj in objs]
+        data = [[jp['modelDate'], jp['offers']['price']] for jp in js]
+        session.close()
+        return data
+    except Exception as e:
+        return []
+
+def get_pages_data(url_list, max_workers=10):
+    results = []
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = executor.map(fetch_url_data, url_list)
+        for result in futures:
+            results.extend(result)
+    return results
 
 
 def get_data_pw(make, model, city):
