@@ -54,7 +54,7 @@ let my_dict = {
 
     "suzuki": [["alto", "Alto"], ["apv", "APV"], ["baleno", "Baleno"], ["carry", "Carry"], ["ciaz", "Ciaz"], ["cultus", "Cultus"],
                ["every", "Every"], ["fx", "FX"], ["hustler", "Hustler"], ["jimny", "Jimny"], ["kei", "Kei"],
-               ["liana", "Liana"], ["margalla", "Margalla"], ["ravi", "Ravi"], ["swift", "Swift"],
+               ["liana", "Liana"], ["margalla", "Margalla"], ["mehran", "Mehran"], ["ravi", "Ravi"], ["swift", "Swift"],
                ["wagon-r", "Wagon R"]],
 };
 
